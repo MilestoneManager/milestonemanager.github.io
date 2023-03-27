@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.2.0/papaparse.min.js"></script>
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+<style>
+    table {
+        border-collapse: collapse;
+        font-family: 'IBM Plex Sans', sans-serif;
+    }
+    
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    span {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: bold;
+    }
+    
+    th {
+        background-color: lightgray;
+        font-weight: bold;
+    }
+    
+    tr:nth-child(even) {
+        background-color: lightblue;
+    }
+    
+    button {
+        background-color: purple;
+        color: white;
+        font-family: 'IBM Plex Sans', sans-serif;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 16px;
+        border-radius: 8px;
+    }
+    
+    .file-input {
+        display: none;
+    }
+    
+    #container {
+        text-align: center;
+    }
+    
+    label[for="csv-file"] {
+        background-color: #004C9A;
+        color: white;
+        font-family: 'IBM Plex Sans', sans-serif;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 16px;
+        border-radius: 8px;
+        display: inline-block;
+    }
+    
+    .file-input+label:hover {
+        background-color: #006B8F;
+    }
+    
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        position: relative;
+        top: 50px;
+        text-align: center;
+    }
+</style>
+
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        th,
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <table id="investment">
+            <tr>
+                <th>Projet</th>
+                <th>Montant initial</th>
+                <th>Ajout mensuel</th>
+                <th>Taux de rendement annuel (%)</th>
+                <th>Nombre d'années</th>
+                <th>Solde</th>
+                <th>Intérêts perçus</th>
+                <th>Taux d'imposition</th>
+                <th>Impôt sur les intérêts</th>
+                <th>Solde après Impôt</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="proj1"></td>
+                <td><input type="number" id="initial1" min="0"></td>
+                <td><input type="number" id="monthly1" min="0"></td>
+                <td><input type="number" id="rate1" min="0"></td>
+                <td><input type="number" id="years1" min="0"></td>
+                <td id="balance1"></td>
+                <td id="interests1"></td>
+                <td><input type="number" id="taxRate1" min="0"></td>
+                <td id="taxamount1"></td>
+                <td id="aftertax1"></td>
+
+            </tr>
+
+
+
+
+
+            <tr>
+                <td><input type="text" id="proj2"></td>
+                <td><input type="number" id="initial2" min="0"></td>
+                <td><input type="number" id="monthly2" min="0"></td>
+                <td><input type="number" id="rate2" min="0"></td>
+                <td><input type="number" id="years2" min="0"></td>
+                <td id="balance2"></td>
+                <td id="interests2"></td>
+                <td><input type="number" id="taxRate2" min="0"></td>
+                <td id="taxamount2"></td>
+                <td id="aftertax2"></td>
+            </tr>
+
+            <tr>
+                <td><input type="text" id="proj3"></td>
+                <td><input type="number" id="initial3" min="0"></td>
+                <td><input type="number" id="monthly3" min="0"></td>
+                <td><input type="number" id="rate3" min="0"></td>
+                <td><input type="number" id="years3" min="0"></td>
+                <td id="balance3"></td>
+                <td id="interests3"></td>
+                <td><input type="number" id="taxRate3" min="0"></td>
+                <td id="taxamount3"></td>
+                <td id="aftertax3"></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="text" id="proj4"></td>
+                <td><input type="number" id="initial4" min="0"></td>
+                <td><input type="number" id="monthly4" min="0"></td>
+                <td><input type="number" id="rate4" min="0"></td>
+                <td><input type="number" id="years4" min="0"></td>
+                <td id="balance4"></td>
+                <td id="interests4"></td>
+                <td><input type="number" id="taxRate4" min="0"></td>
+                <td id="taxamount4"></td>
+                <td id="aftertax4"></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="text" id="proj5"></td>
+                <td><input type="number" id="initial5" min="0"></td>
+                <td><input type="number" id="monthly5" min="0"></td>
+                <td><input type="number" id="rate5" min="0"></td>
+                <td><input type="number" id="years5" min="0"></td>
+                <td id="balance5"></td>
+                <td id="interests5"></td>
+                <td><input type="number" id="taxRate5" min="0"></td>
+                <td id="taxamount5"></td>
+                <td id="aftertax5"></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="text" id="proj6"></td>
+                <td><input type="number" id="initial6" min="0"></td>
+                <td><input type="number" id="monthly6" min="0"></td>
+                <td><input type="number" id="rate6" min="0"></td>
+                <td><input type="number" id="years6" min="0"></td>
+                <td id="balance6"></td>
+                <td id="interests6"></td>
+                <td><input type="number" id="taxRate6" min="0"></td>
+                <td id="taxamount6"></td>
+                <td id="aftertax6"></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="text" id="proj7"></td>
+                <td><input type="number" id="initial7" min="0"></td>
+                <td><input type="number" id="monthly7" min="0"></td>
+                <td><input type="number" id="rate7" min="0"></td>
+                <td><input type="number" id="years7" min="0"></td>
+                <td id="balance7"></td>
+                <td id="interests7"></td>
+                <td><input type="number" id="taxRate7" min="0"></td>
+                <td id="taxamount7"></td>
+                <td id="aftertax7"></td>
+            </tr>
+
+            <tr>
+                <td><input type="text" id="proj8"></td>
+                <td><input type="number" id="initial8" min="0"></td>
+                <td><input type="number" id="monthly8" min="0"></td>
+                <td><input type="number" id="rate8" min="0"></td>
+                <td><input type="number" id="years8" min="0"></td>
+                <td id="balance8"></td>
+                <td id="interests8"></td>
+                <td><input type="number" id="taxRate8" min="0"></td>
+                <td id="taxamount8"></td>
+                <td id="aftertax8"></td>
+            </tr>
+
+            <tr>
+                <td><input type="text" id="proj9"></td>
+                <td><input type="number" id="initial9" min="0"></td>
+                <td><input type="number" id="monthly9" min="0"></td>
+                <td><input type="number" id="rate9" min="0"></td>
+                <td><input type="number" id="years9" min="0"></td>
+                <td id="balance9"></td>
+                <td id="interests9"></td>
+                <td><input type="number" id="taxRate9" min="0"></td>
+                <td id="taxamount9"></td>
+                <td id="aftertax9"></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="text" id="proj10"></td>
+                <td><input type="number" id="initial10" min="0"></td>
+                <td><input type="number" id="monthly10" min="0"></td>
+                <td><input type="number" id="rate10" min="0"></td>
+                <td><input type="number" id="years10" min="0"></td>
+                <td id="balance10"></td>
+                <td id="interests10"></td>
+                <td><input type="number" id="taxRate10" min="0"></td>
+                <td id="taxamount10"></td>
+                <td id="aftertax10"></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+        </table>
+        <br>
+        <span id="tot">Soldes avant impôt :</span> <span id="total"></span>
+
+        <span id="tottax">Impôt sur les intérêts :</span> <span id="totaltax"></span>
+
+
+
+        <span id="totaftertax">Soldes après impôt :</span> <span id="totalaftertax"></span>
+
+        <br><br>
+
+        <div id="container">
+            <button id="export-button">Exporter au format CSV</button>
+
+
+
+            <!-- <input type="file" id="csv-file" accept=".csv"> -->
+
+
+            <input type="file" id="csv-file" class="file-input" accept=".csv">
+
+            <label for="csv-file">Importer depuis CSV</label>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        const calculate = (initial, monthly, rate, years) => {
+            let balance = initial;
+            for (let i = 1; i <= years * 12; i++) {
+
+                // balance = (initial + (initial*(rate/100) * years) + (monthly * 12 * years) + ((monthly * 12 * years) * (rate/100) )) ;
+                let ratemonthly = ((1 + rate / 100) ** (1 / 12) - 1) * 100
+
+                balance = (initial * (1 + rate / 100) ** years) + (monthly * (((((1 + ratemonthly / 100) ** ((12 * years) + 1)) - 1) / (ratemonthly / 100)) - 1));
+
+            }
+            return balance.toFixed(2);
+
+
+
+        };
+
+        const update = () => {
+            let totalBalance = 0;
+            let i = 1;
+            while (true) {
+                const proj = document.getElementById(`proj${i}`);
+                if (!proj) break;
+
+                const balance = calculate(+document.getElementById(`initial${i}`).value, +document.getElementById(`monthly${i}`).value, +document.getElementById(`rate${i}`).value, +document.getElementById(`years${i}`).value
+
+
+
+                );
+
+
+                document.getElementById(`balance${i}`).innerHTML = balance;
+
+                totalBalance += +balance;
+
+
+
+                // calculate the interests per year
+                let rate = document.getElementById(`rate${i}`).value;
+                let initial = document.getElementById(`initial${i}`).value;
+
+                let monthly = document.getElementById(`monthly${i}`).value;
+
+                let years = document.getElementById(`years${i}`).value;
+
+
+                //let interests = ((initial * (rate / 100)) * years + ((monthly * 12) * rate / 100)) * years ;
+
+                //let interests = initial * rate / 100 * years + monthly * 12 * rate / 100 * years;
+                let monthlyadd = monthly;
+                let interests = balance - initial - monthly * 12 * years;
+
+                // calculate the tax amount based on the tax rate
+                let taxrate = document.getElementById(`taxRate${i}`).value;
+                let taxAmount = interests * taxrate / 100;
+
+                //balance after tax
+
+                let aftertax = balance - taxAmount;
+
+
+
+                // update the table cells with the calculated values
+
+                document.getElementById("interests" + i).innerHTML = interests.toFixed(2);
+                document.getElementById("taxamount" + i).innerHTML = taxAmount.toFixed(2);
+                document.getElementById("aftertax" + i).innerHTML = aftertax.toFixed(2);
+
+
+
+
+                i++;
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+
+            document.getElementById("total").innerHTML = totalBalance.toFixed(2);
+
+            let totaltax;
+            totaltax =
+                parseFloat(document.getElementById("taxamount1").innerHTML) + parseFloat(document.getElementById("taxamount2").innerHTML) + parseFloat(document.getElementById("taxamount3").innerHTML) + parseFloat(document.getElementById("taxamount4").innerHTML) + parseFloat(document.getElementById("taxamount5").innerHTML) + parseFloat(document.getElementById("taxamount6").innerHTML) + parseFloat(document.getElementById("taxamount7").innerHTML) + parseFloat(document.getElementById("taxamount8").innerHTML) + parseFloat(document.getElementById("taxamount9").innerHTML) + parseFloat(document.getElementById("taxamount10").innerHTML);
+
+            document.getElementById("totaltax").innerHTML = totaltax.toFixed(2);
+
+
+
+
+
+            let totalaftertax;
+            totalaftertax =
+                parseFloat(document.getElementById("aftertax1").innerHTML) + parseFloat(document.getElementById("aftertax2").innerHTML) + parseFloat(document.getElementById("aftertax3").innerHTML) + parseFloat(document.getElementById("aftertax4").innerHTML) + parseFloat(document.getElementById("aftertax5").innerHTML) + parseFloat(document.getElementById("aftertax6").innerHTML) + parseFloat(document.getElementById("aftertax7").innerHTML) + parseFloat(document.getElementById("aftertax8").innerHTML) + parseFloat(document.getElementById("aftertax9").innerHTML) + parseFloat(document.getElementById("aftertax10").innerHTML);
+
+            document.getElementById("totalaftertax").innerHTML = totalaftertax.toFixed(2);
+
+        };
+
+        document
+            .getElementById("investment")
+            .addEventListener("change", update);
+
+        document
+            .getElementById("investment")
+            .addEventListener("mousemove", update);
+
+        document
+            .getElementById("investment")
+            .addEventListener("input", update);
+
+        let inputTimeout;
+
+        document.getElementById("csv-file").addEventListener("change", function() {
+            clearTimeout(inputTimeout);
+            inputTimeout = setTimeout(update, 2);
+        });
+
+
+
+
+
+
+        //script export csv  
+
+
+        document.getElementById("export-button").addEventListener("click", function() {
+            let csv = "Projet,Montant_initial,Ajout_mensuel,Taux_de_rendement_annuel,Nombre_d_années,Solde,Intérêts_perçus,Taux_d_imposition,Impôt_sur_les intérêts,Solde_après_Impôt\n";
+            csv +=
+                document.getElementById("proj1").value +
+                "," +
+                document.getElementById("initial1").value +
+                "," +
+                document.getElementById("monthly1").value +
+                "," +
+                document.getElementById("rate1").value +
+                "," +
+                document.getElementById("years1").value +
+                "," +
+                document.getElementById("balance1").innerHTML + "," +
+                document.getElementById("interests1").innerHTML +
+                "," +
+                document.getElementById("taxRate1").value +
+                "," +
+
+                document.getElementById("taxamount1").innerHTML +
+                "\n";
+
+
+
+            csv +=
+                document.getElementById("proj2").value +
+                "," +
+                document.getElementById("initial2").value +
+                "," +
+                document.getElementById("monthly2").value +
+                "," +
+                document.getElementById("rate2").value +
+                "," +
+                document.getElementById("years2").value +
+                "," +
+                document.getElementById("balance2").innerHTML +
+                "," +
+                document.getElementById("interests2").innerHTML +
+                "," +
+                document.getElementById("taxRate2").value +
+                "," +
+
+                document.getElementById("taxamount2").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj3").value +
+                "," +
+                document.getElementById("initial3").value +
+                "," +
+                document.getElementById("monthly3").value +
+                "," +
+                document.getElementById("rate3").value +
+                "," +
+                document.getElementById("years3").value +
+                "," +
+                document.getElementById("balance3").innerHTML +
+                "," +
+                document.getElementById("interests3").innerHTML +
+                "," +
+                document.getElementById("taxRate3").value +
+                "," +
+
+                document.getElementById("taxamount3").innerHTML +
+                "\n";
+
+
+            csv +=
+                document.getElementById("proj4").value +
+                "," +
+                document.getElementById("initial4").value +
+                "," +
+                document.getElementById("monthly4").value +
+                "," +
+                document.getElementById("rate4").value +
+                "," +
+                document.getElementById("years4").value +
+                "," +
+                document.getElementById("balance4").innerHTML +
+                "," +
+                document.getElementById("interests4").innerHTML +
+                "," +
+                document.getElementById("taxRate4").value +
+                "," +
+
+                document.getElementById("taxamount4").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj5").value +
+                "," +
+                document.getElementById("initial5").value +
+                "," +
+                document.getElementById("monthly5").value +
+                "," +
+                document.getElementById("rate5").value +
+                "," +
+                document.getElementById("years5").value +
+                "," +
+                document.getElementById("balance5").innerHTML +
+                "," +
+                document.getElementById("interests5").innerHTML +
+                "," +
+                document.getElementById("taxRate5").value +
+                "," +
+
+                document.getElementById("taxamount5").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj6").value +
+                "," +
+                document.getElementById("initial6").value +
+                "," +
+                document.getElementById("monthly6").value +
+                "," +
+                document.getElementById("rate6").value +
+                "," +
+                document.getElementById("years6").value +
+                "," +
+                document.getElementById("balance6").innerHTML +
+                "," +
+                document.getElementById("interests6").innerHTML +
+                "," +
+                document.getElementById("taxRate6").value +
+                "," +
+
+                document.getElementById("taxamount6").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj7").value +
+                "," +
+                document.getElementById("initial7").value +
+                "," +
+                document.getElementById("monthly7").value +
+                "," +
+                document.getElementById("rate7").value +
+                "," +
+                document.getElementById("years7").value +
+                "," +
+                document.getElementById("balance7").innerHTML +
+                "," +
+                document.getElementById("interests7").innerHTML +
+                "," +
+                document.getElementById("taxRate7").value +
+                "," +
+
+                document.getElementById("taxamount7").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj8").value +
+                "," +
+                document.getElementById("initial8").value +
+                "," +
+                document.getElementById("monthly8").value +
+                "," +
+                document.getElementById("rate8").value +
+                "," +
+                document.getElementById("years8").value +
+                "," +
+                document.getElementById("balance8").innerHTML +
+                "," +
+                document.getElementById("interests8").innerHTML +
+                "," +
+                document.getElementById("taxRate8").value +
+                "," +
+
+                document.getElementById("taxamount8").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj9").value +
+                "," +
+                document.getElementById("initial9").value +
+                "," +
+                document.getElementById("monthly9").value +
+                "," +
+                document.getElementById("rate9").value +
+                "," +
+                document.getElementById("years9").value +
+                "," +
+                document.getElementById("balance9").innerHTML +
+                "," +
+                document.getElementById("interests9").innerHTML +
+                "," +
+                document.getElementById("taxRate9").value +
+                "," +
+
+                document.getElementById("taxamount9").innerHTML +
+                "\n";
+
+            csv +=
+                document.getElementById("proj10").value +
+                "," +
+                document.getElementById("initial10").value +
+                "," +
+                document.getElementById("monthly10").value +
+                "," +
+                document.getElementById("rate10").value +
+                "," +
+                document.getElementById("years10").value +
+                "," +
+                document.getElementById("balance10").innerHTML +
+                "," +
+                document.getElementById("interests10").innerHTML +
+                "," +
+                document.getElementById("taxRate10").value +
+                "," +
+
+                document.getElementById("taxamount10").innerHTML +
+                "\n";
+
+            const hiddenElement = document.createElement("a");
+            hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+            hiddenElement.target = "_blank";
+            hiddenElement.download = "investments.csv";
+            hiddenElement.click();
+        });
+
+        //script import csv
+        document.getElementById("csv-file").addEventListener("change", function() {
+            Papa.parse(this.files[0], {
+                header: true,
+                dynamicTyping: true,
+                complete: function(results) {
+                    results.data.forEach(function(row, index) {
+                        document.getElementById("proj" + (index + 1)).value = row.Projet;
+                        document.getElementById("initial" + (index + 1)).value = parseFloat(row.Montant_initial);
+                        document.getElementById("monthly" + (index + 1)).value = parseFloat(row.Ajout_mensuel);
+                        document.getElementById("rate" + (index + 1)).value = parseFloat(row.Taux_de_rendement_annuel);
+                        document.getElementById("years" + (index + 1)).value = parseFloat(row.Nombre_d_années);
+                        document.getElementById("taxRate" + (index + 1)).value = parseFloat(row.Taux_d_imposition);
+                    });
+
+                    update();
+                }
+            });
+        });
+    </script>
